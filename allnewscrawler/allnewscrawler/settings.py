@@ -7,20 +7,26 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'allnewscrawler'
 
+
+BOT_NAME = 'allnewscrawler'
 SPIDER_MODULES = ['allnewscrawler.spiders']
 NEWSPIDER_MODULE = 'allnewscrawler.spiders'
+USER_AGENT = 'allcrawling'
 
-
+ROBOTSTXT_OBEY = False
+CONCURRENT_REQUESTS = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 8
+CONCURRENT_REQUESTS_PER_IP = 0
+DOWNLOAD_DELAY = 0
+ITEM_PIPELINES = {
+   'allnewscrawler.pipelines.AllnewscrawlerPipeline': 300,
+}
+#DEFAULT_REQUEST_HEADERS = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36"}
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'allnewscrawler (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = False
-ITEM_PIPELINES = {
-   'allnewscrawler.pipelines.AllnewscrawlerPipeline': 300,
-}
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -28,7 +34,7 @@ ITEM_PIPELINES = {
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+#DOWNLOAD_DELAY =
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -68,6 +74,7 @@ ITEM_PIPELINES = {
 #ITEM_PIPELINES = {
 #    'allnewscrawler.pipelines.AllnewscrawlerPipeline': 300,
 #}
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
