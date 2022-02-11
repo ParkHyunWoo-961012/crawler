@@ -2,14 +2,11 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
-import logging
-
 import scrapy
-
 
 class AllnewscrawlerItem(scrapy.Item):
     id = scrapy.Field()
-    category = scrapy.Field()
+    category = scrapy.Field()## source 
     title = scrapy.Field()
     content = scrapy.Field()
     created_date = scrapy.Field()
