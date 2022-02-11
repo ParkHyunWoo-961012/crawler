@@ -3,10 +3,6 @@ import datetime
 import scrapy
 from allnewscrawler.items import AllnewscrawlerItem
 
-
-import logging
-logger = logging.getLogger('allcrawling')
-
 class AllcrawlingSpider(scrapy.Spider):
 
     name = 'allcrawling'
@@ -16,7 +12,7 @@ class AllcrawlingSpider(scrapy.Spider):
         try:
             press_list = [172504, 11, 45,174606,396,21,98009,190,15,33,38,2,200,8,17,49,7,5,3589,129
                           ,90,6,216,139,3,19,35,3572,359,43,157,10,4,47,12,244,310,327,75,98,60,73,189,23,318,134,317,59,131,294,297
-                          ,94,219,82,85,77,220]
+                          ,94,219,82,85,77,220] # 다음 cap 들어가야됨
             #비즈니스워치까지
             num_of_days_to_crawl = 1
             num_of_pages_to_crawl = 50
@@ -34,6 +30,7 @@ class AllcrawlingSpider(scrapy.Spider):
 
 
     def parse_url(self, response):
+        pritn("error")
         try:
             for sel in response.xpath('//*[@id="mArticle"]/div[2]/ul/li/div'):
                 yield scrapy.Request(
@@ -44,6 +41,7 @@ class AllcrawlingSpider(scrapy.Spider):
             pass
 
     def parse(self, response):
+              print("error")
         try:
             item = AllnewscrawlerItem()
             item.initialize('')
@@ -55,6 +53,7 @@ class AllcrawlingSpider(scrapy.Spider):
                 '//*[@id="harmonyContainer"]/section/div[contains(@dmcf-ptype, "general")]/text()').getall() \
                 + response.xpath(
                 '//*[@id="harmonyContainer"]/section/p[contains(@dmcf-ptype, "general")]/text()').getall()
+            
             element1 = response.xpath('//*[@id="cSub"]/div[1]/span/span[1][@class="txt_info"]/text()').getall()
             num_date1 = response.xpath('//*[@id="cSub"]/div[1]/span/span[1]/span[@class="num_date"]/text()').get()
             element2 = response.xpath('//*[@id="cSub"]/div[1]/span/span[2][@class="txt_info"]/text()').getall()
