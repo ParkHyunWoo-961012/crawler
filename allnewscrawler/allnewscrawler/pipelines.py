@@ -10,10 +10,6 @@ from itemadapter import ItemAdapter
 
 from sqlalchemy.orm import sessionmaker
 from .dbmaker import Content, db_connect, create_tables
-import logging
-
-logger = logging.getLogger('allcrawling')
-
 
 class AllnewscrawlerPipeline():
     def __init__(self):
