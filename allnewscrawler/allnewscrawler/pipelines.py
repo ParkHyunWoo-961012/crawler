@@ -5,8 +5,6 @@
 
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
-
 
 from sqlalchemy.orm import sessionmaker
 from .dbmaker import Content, db_connect, create_tables
