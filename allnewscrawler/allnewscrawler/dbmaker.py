@@ -7,7 +7,7 @@ DeclarativeBase = declarative_base()
 
 
 def db_connect():
-    return create_engine("mysql+pymysql://root:password@localhost/news_db")
+    return create_engine("mysql+pymysql://root:비밀번호@localhost/news_db")
 
 
 def create_tables(engine):

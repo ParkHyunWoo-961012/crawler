@@ -5,9 +5,13 @@
 
 
 # useful for handling different item types with a single interface
+from itemadapter import ItemAdapter
+
 
 from sqlalchemy.orm import sessionmaker
 from .dbmaker import Content, db_connect, create_tables
+import re
+
 
 class AllnewscrawlerPipeline():
     def __init__(self):
@@ -17,13 +21,25 @@ class AllnewscrawlerPipeline():
 
     def process_item(self, item, spider):
         session = self.Session()
-        article = Content()
-        article.id = item['id'] if item['id'] else ''
-        article.category = item['category'] if item['category'] else ''
-        article.title = item['title'].replace("'", "''") if item['title'] else ''
-        # for i in item['content']:
-        #     article.content += (i.replace("'", "''"))
-        article.content = str(item['content'])
+        content = str(item['content'])
+        content =content.replace("[","")
+        content =content.replace("]","")
+        content = content.replace(r'\\n',"")
+        content = re.sub(" +"," ", content)
+        content = content.replace("'","")
+        content = content.replace('"',"")#
+        content = content.replace(",","") # 쉼표 제거
+        content = content.replace("  +"," ") ## 띄어쓰기만 있는 애들 제거
+
+        if content ==" " or content == "":
+            pass
+        else:
+            article = Content()
+            article.id = item['id'] if item['id'] else ''
+            article.category = item['category'] if item['category'] else ''
+            article.title = item['title'].replace("'", "''") if item['title'] else ''
+            article.content = content
+
         if len(item["created_date"]) == 19:
             article.created_dt = item["created_date"][0:4] \
                                  + '-' \
