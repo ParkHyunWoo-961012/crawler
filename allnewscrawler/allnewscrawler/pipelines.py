@@ -5,9 +5,6 @@
 
 
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
-
-
 from sqlalchemy.orm import sessionmaker
 from .dbmaker import Content, db_connect, create_tables
 import re
@@ -26,8 +23,11 @@ class AllnewscrawlerPipeline():
         content =content.replace("]","")
         content = content.replace(r'\\n',"")
         content = re.sub(" +"," ", content)
-        content = content.replace("'","")
-        content = content.replace('"',"")#
+        content = content.replace("'","") # 따옴표 제거
+        content = content.replace('"',"") # 따옴표 제거
+        # content = re.sub("[1-9+-]+[1-9+-]+[1-9]","",content) # 영어 지우기 필요하면 지움
+        content = re.sub("([0-9+-]+[0-9+-]+[0-9+])","",content) # 전화번호 들어간거 지우기
+        content = re.sub('([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)'," ",content) #이메일 주소 지우기
         content = content.replace(",","") # 쉼표 제거
         content = content.replace("  +"," ") ## 띄어쓰기만 있는 애들 제거
 
